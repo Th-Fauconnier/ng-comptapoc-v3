@@ -1,0 +1,104 @@
+
+<mat-card appearance="outlined">
+    <div class="container">
+        @if( !showEntryForm ){
+            <button mat-stroked-button type="submit" (click)="onShowEntryForm('Création d\'une entrée comptable')"
+            > 
+                Ajouter une nouvelle entrée comptable 
+            </button>
+        }@else {
+                <button mat-stroked-button type="submit"
+                    (click)="onShowEntryForm('')"> 
+                        Annuler 
+                </button>
+            
+        }
+        @if( showEntryForm ) { 
+            <app-accounting-entry-form [formTitle]=formTitle [accountingBook]="accountBook()" />
+        }
+    </div>
+</mat-card>
+ 
+
+<mat-card appearance="outlined">
+    <h2>Livre Comptable</h2>
+    <mat-card-header>
+        <mat-card-title> <h2> {{ accountBook().name }} </h2> </mat-card-title>
+        <mat-card-subtitle> {{ accountBook().description }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table 
+            mat-table
+            [dataSource]="entries"
+            class="mat-shadow-2"
+        >
+            <ng-container matColumnDef="N° de l'entrée">
+                <th mat-header-cell *matHeaderCellDef> N° de l'entrée </th>
+                <td mat-cell *matCellDef="let entry"> {{ entry.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Détails">
+                <th mat-header-cell *matHeaderCellDef> Détails </th>
+                <td mat-cell *matCellDef="let entry"> 
+
+                    <h3> {{ entry.date | date:'dd/MM/YY' }} - {{ entry.label }}</h3>
+                      
+                    <table 
+                    mat-table 
+                    [dataSource]="entry.operations"
+                    class="mat-shadow-2">
+                         <ng-container matColumnDef="Débiteur">
+                           <th mat-header-cell *matHeaderCellDef> Compte débiteur </th>
+                            <td mat-cell *matCellDef="let operation"> 
+                                @if(operation.amount < 0 ){
+                                    {{ operation.financialAccount.code }} - {{ operation.financialAccount.name }}
+                                }
+                            </td>
+                        </ng-container>
+                         <ng-container matColumnDef="Créditeur">
+                            <th mat-header-cell *matHeaderCellDef> Compte créditeur </th>
+                            <td mat-cell *matCellDef="let operation"> 
+                                @if(operation.amount >= 0 ){
+                                    {{ operation.financialAccount.code }} - {{ operation.financialAccount.name }}
+                                }
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="label">
+                            <th mat-header-cell *matHeaderCellDef> opération </th>
+                             <td mat-cell *matCellDef="let operation"> 
+                                {{ operation.date | date:'dd/MM/YY' }} - {{ operation.label }}
+                            </td>
+                        </ng-container>
+                         <ng-container matColumnDef="Débit">
+                            <th mat-header-cell *matHeaderCellDef> Débit </th>
+                            <td mat-cell *matCellDef="let operation"> 
+                                @if(operation.amount < 0 ){
+                                    {{ operation.amount }}
+                                }
+                            </td>
+                        </ng-container>
+                         <ng-container matColumnDef="Crédit">
+                            <th mat-header-cell *matHeaderCellDef> Crédit </th>
+                            <td mat-cell *matCellDef="let operation"> 
+                                @if(operation.amount >= 0 ){
+                                    {{ operation.amount }}
+                                }
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedOperationColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedOperationColumns"></tr>
+                    </table>
+
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+
+<!-- <app-account-book [accountBook]="accountBook()" /> -->

@@ -1,0 +1,11 @@
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+}

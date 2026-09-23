@@ -1,0 +1,44 @@
+
+<mat-card appearance="outlined">
+    <div class="container">
+        <button mat-stroked-button color="primary" (click)="onShowForm('Création d\'un nouveau livret', showForm)">Créer un nouveau livret
+
+        </button>
+        @if(showForm){
+           <button mat-stroked-button color="primary" (click)="onShowForm('')">
+            Annuler
+           </button>
+        }
+        @if( showForm ){
+            <app-account-book-form [formTitle]=formTitle [bookForUpdate]=bookForUpdate />
+        }  
+    </div>
+</mat-card>
+
+<mat-card appearance="outlined">
+    <h2> Livrets comptables </h2>
+    <table mat-table [dataSource]="accountBooks()" multiTemplateDataRows class="mat-shadow-2">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let accountBook">{{ accountBook.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let accountBook"> {{accountBook.description}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef=""> Action </th>
+            <td mat-cell *matCellDef="let accountBook" class="lastRow lastCol">
+                <button mat-stroked-button color="primary" routerLink="/book-details/{{accountBook.id }}">Ouvrir</button>
+                <button mat-stroked-button color="primary" (click)="onShowForm('Editer un livret', true, accountBook)" >Editer</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>  
+</mat-card>

@@ -1,0 +1,17 @@
+<form [formGroup]="formBookSelector" (ngSubmit)="onSubmitBook()">
+    <mat-form-field class="full-width">
+        <mat-label for="accoutingBook"> {{ selectorLabel }} </mat-label>
+        <select matNativeControl 
+            formControlName="accoutingBook"
+            id="accoutingBook"
+            
+        >
+            @for( book of accountBookList(); track book.id ){
+                <option [ngValue]=book>{{ book.name }} </option>
+            }
+        </select>
+    </mat-form-field>
+
+     <button mat-stroked-button type="submit" > Comfirmer </button>
+</form>
+    

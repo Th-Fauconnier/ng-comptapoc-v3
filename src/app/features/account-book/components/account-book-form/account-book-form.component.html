@@ -1,0 +1,36 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container">
+    <h3> {{ formTitle }} </h3>
+    
+    <mat-form-field class="full-width">
+        <mat-label for="name"> Nom du livre de compte </mat-label>
+        <input 
+            class="full-width"
+            matInput
+            formControlName="name" 
+            type="text" 
+            class="form-control" 
+            id="name" 
+            placeholder="Entrez le nom du livre de compte"
+            value="{{ bookForUpdate? bookForUpdate.name : '' }}"
+        >
+    </mat-form-field>
+        
+    <mat-form-field class="full-width">
+        <mat-label for="description"> Description du livre de compte </mat-label>
+        <textarea 
+            class="full-width"
+            matInput
+            formControlName="description" 
+            class="form-control" 
+            id="description" 
+            placeholder="Entrez la description du livre de compte"
+            value="{{ bookForUpdate? bookForUpdate.description : '' }}"
+        ></textarea>
+    </mat-form-field>
+        
+    <button mat-stroked-button type="submit" > Enregistrer 
+        @if( bookForUpdate != undefined ){
+            les changements
+        } @else { le nouveau livret }
+    </button>
+</form>

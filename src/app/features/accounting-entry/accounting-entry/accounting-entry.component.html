@@ -1,0 +1,13 @@
+<table>
+   <tr>
+        <td></td>
+        <td>{{ entry.id }}</td>
+        <td> {{ entry.label }} </td>
+    </tr> 
+    @for( operation of entry.operations; track operation.id ){
+        <tr>
+            <td> amount: {{ operation.amount }}</td>
+            <td> compte: {{ operation.accountDetails?.name }}</td>
+        </tr>
+    }
+</table>

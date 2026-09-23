@@ -1,0 +1,34 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+    <h3> {{ formTitle }} </h3>
+
+    <mat-form-field class="full-width">
+        <mat-label for="name"> Nom compte bancaire </mat-label>
+        <input 
+            class="form-control, full-width"
+            matInput
+            formControlName="name" 
+            type="text" 
+            id="name" 
+            placeholder= "Entrez le nom du nouveau compte"
+            value="{{ accountForUpdate? accountForUpdate.name : '' }}"
+        >
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label for="code"> Code type du compte bancaire </mat-label>
+        <input 
+            class="full-width"
+            matInput
+            formControlName="code" 
+            class="form-control" 
+            id="code" 
+            placeholder="Entrez le code"
+            value="{{ accountForUpdate? accountForUpdate.code : '' }}"
+        >
+    </mat-form-field>
+        
+    <button mat-stroked-button type="submit" > 
+        Enregistrer
+        @if( accountForUpdate != undefined ){ les changements } @else { le nouveau compte }
+    </button>
+</form>

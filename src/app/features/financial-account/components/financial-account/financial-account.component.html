@@ -1,0 +1,52 @@
+<div id="faccount-section">
+    @if( faccount ) {
+       <div>
+    <header> 
+        <h2> {{ faccount.name }} </h2>
+        <span> code:{{ faccount.code }} </span>
+    </header>
+    <section>
+        <h2> Liste des opérations </h2>
+        <table>
+            <tr>
+                <th> date </th>
+                <th [width]="200"> label </th>
+                <th> crédit </th>
+                <th> débit </th>
+            </tr>
+            @if( faccount.operations && faccount.operations.length > 0 ) {
+                @for( operation of faccount.operations; track operation.id ) {
+                <tr>
+                    <td> {{ operation.date | date:'dd/MM/yy'}} </td>
+                    <td> {{ operation.label }}</td>
+                    @if( operation.amount >= 0 ){
+                        <td> {{ operation.amount }} </td>
+                    } @else { <td></td> }
+                    @if( operation.amount < 0 ){
+                        <td> {{ operation.amount }} </td>
+                    } @else { <td></td> }
+                </tr>
+                }
+            } 
+            @else {
+                <tr> 
+                    <td colspan="4"> Ce compte ne contient pas d'operation. </td>
+                </tr>
+             }
+            
+            <tr>
+                <td colspan="2"></td>
+                <td> {{ getCreditsSum() }}</td>
+                <td> {{ getDebitSum() }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="2">
+                    {{ getDebitSum() + getCreditsSum() }}
+                </td>
+            </tr>
+        </table>
+    </section>
+   </div> 
+    }
+</div>

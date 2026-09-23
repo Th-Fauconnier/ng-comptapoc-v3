@@ -1,0 +1,59 @@
+<!-- <div>
+  <table mat-table [dataSource]="accountBook" multiTemplateDataRows class="mat-shadow-2">
+
+    <ng-container matColumnDef="N°">
+      <th mat-header-cell *matHeaderCellDef>N°</th>
+      <td mat-cell > numero d'entrée ? </td>
+    </ng-container>
+  </table>
+</div> -->
+
+
+<div>
+    <table>
+      <thead>
+        <tr>
+            <th colspan="3"> Livre Comptable </th>
+        </tr>
+        <tr>
+            <th> {{ accountBook.id }} </th>
+            <th> {{ accountBook.name }} </th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            {{ accountBook.description }}
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+          @if( accountBook.accountingEntries && accountBook.accountingEntries.length !== 0 ){
+            @for ( entry of accountBook.accountingEntries; track entry.id ) {
+              <app-accounting-entry [entry]="entry"/>
+            }
+          } @else {
+            <tr>
+              <td colspan="4"> Auncunes entrées trouvés. </td>
+            </tr>
+          }
+          <tr>
+            <td colspan="4">
+                @if( !showEntryForm ){
+                    <button (click)="onShowEntryForm()"> Ajouter une nouvelle entrée comptable </button>
+                }@else {
+                    <h4> Création d'une entrée comptable 
+                    <button (click)="onShowEntryForm()"> Annuler </button></h4>
+                }
+                @if( showEntryForm ) { 
+                    <app-accounting-entry-form 
+                      [accountingBook]="accountBook"
+                    />
+                }
+            </td>
+            
+
+            
+          </tr>
+      </tbody>
+  </table>  
+  </div>  
+

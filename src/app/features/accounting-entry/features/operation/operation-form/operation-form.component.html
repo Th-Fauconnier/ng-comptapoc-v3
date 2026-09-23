@@ -1,0 +1,51 @@
+<form [formGroup]="formOperation" (ngSubmit)="onSubmit()">
+    <div  class="container">
+        <mat-form-field class="full-width">
+            <mat-label for="amount"> Label (optionnel) </mat-label>
+            <input 
+            class="full-width"
+            matInput
+            formControlName="label" 
+            type="text" 
+            class="form-control" 
+            id="label" 
+            placeholder="Entrez le label de l'opération"
+        >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+             <mat-label for="amount"> Montant </mat-label>
+            <input 
+                 class="full-width"
+                matInput
+                formControlName="amount" 
+                type="number" 
+                class="form-control" 
+                id="amount" 
+                placeholder="Entrez le montant de l'opération"
+            >
+        </mat-form-field>
+        
+        <mat-form-field class="full-width">
+            <mat-label for="financialAccount"> Selectionnez le compte concerné </mat-label>
+            <mat-select matNativeControl 
+                formControlName="financialAccount"
+                id="financialAccount"
+            >
+                @for( faccount of financialAccountList; track faccount.id ){
+                    <option [ngValue]=faccount>{{ faccount.name }} </option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Date de l'opération</mat-label>
+            <input matInput formControlName="date" [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <!-- <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <button mat-stroked-button type="submit" > Ajouter </button>
+
+</form>
